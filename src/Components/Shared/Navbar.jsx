@@ -1,15 +1,46 @@
+import { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../../Provider/AuthProvider";
 
 const Navbar = () => {
+  const { user, logoutUser } = useContext(AuthContext);
 
-    const navItems = <>
-        <li><NavLink to="/">Home</NavLink></li>
-        <li><NavLink to="/about">About</NavLink></li>
-        <li><NavLink to="/services">Services</NavLink></li>
-        <li><NavLink to="/contact">Contact</NavLink></li>
-        <li><NavLink to="/login">Login</NavLink></li>
-        <li><NavLink to="/register">Register</NavLink></li>
+  const handleLogout = () => {
+    logoutUser()
+      .then(() => {
+        console.log("user logged out");
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const navItems = (
+    <>
+      <li>
+        <NavLink to="/">Home</NavLink>
+      </li>
+      <li>
+        <NavLink to="/about">About</NavLink>
+      </li>
+      <li>
+        <NavLink to="/services">Services</NavLink>
+      </li>
+      <li>
+        <NavLink to="/contact">Contact</NavLink>
+      </li>
+      {!user && (
+        <>
+          <li>
+            <NavLink to="/login">Login</NavLink>
+          </li>
+          <li>
+            <NavLink to="/register">Register</NavLink>
+          </li>
+        </>
+      )}
     </>
+  );
   return (
     <div className="navbar bg-base-100 px-5 md:px-8 lg:px-12">
       <div className="navbar-start">
@@ -42,13 +73,16 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal gap-5 px-1">
-         {navItems}
-        </ul>
+        <ul className="menu menu-horizontal gap-5 px-1">{navItems}</ul>
       </div>
-      <div className="navbar-end">
-        <a className="btn">Button</a>
-      </div>
+      {user && (
+        <div className="navbar-end">
+          <h3 className="mr-5">{user.email}</h3>
+          <a onClick={handleLogout} className="btn">
+            Logout
+          </a>
+        </div>
+      )}
     </div>
   );
 };
