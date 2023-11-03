@@ -7,9 +7,7 @@ const Navbar = () => {
 
   const handleLogout = () => {
     logoutUser()
-      .then(() => {
-        console.log("user logged out");
-      })
+      .then(() => {})
       .catch((err) => {
         console.log(err.message);
       });
@@ -21,7 +19,7 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="/about">About</NavLink>
+        <NavLink to="/bookings">Bookings</NavLink>
       </li>
       <li>
         <NavLink to="/services">Services</NavLink>

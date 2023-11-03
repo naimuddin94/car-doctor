@@ -10,12 +10,10 @@ const Login = () => {
     const email = form.email.value;
     const password = form.password.value;
     loginUser(email, password)
-      .then((result) => {
+      .then(() => {
         form.reset();
-        const user = result.user;
-        console.log(user);
       })
-      .then((error) => {
+      .catch((error) => {
         console.log(error.message);
       });
   };
